@@ -19,8 +19,11 @@ class SnippetManager():
 
 		if not self.folder.getExcludeFromNav():
 			self.folder.setExcludeFromNav('true')
+			self.folder.reindexObject()
 
 		self.index = self.indexSnippets()
+
+
 
 	def createSnippetDoc(self, snippetId, folder=False):
 
