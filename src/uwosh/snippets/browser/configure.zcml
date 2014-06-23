@@ -17,22 +17,6 @@
 	    />
 
     <browser:page
-        name="create-snippet"
-        for="*"
-        class=".addsnippet.SnippetForm"
-        permission="cmf.ManagePortal"
-        layer=".interfaces.ISnippetsLayer"
-        />
-
-    <browser:page
-        name="edit-snippet"
-        for="*"
-        class=".addsnippet.SnippetEditForm"
-        permission="cmf.ManagePortal"
-        layer=".interfaces.ISnippetsLayer"
-        />
-
-    <browser:page
         name="delete-snippet"
         for="*"
         class=".deletesnippet.DeleteSnippet"

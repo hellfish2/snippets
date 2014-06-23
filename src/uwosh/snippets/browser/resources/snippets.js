@@ -1,4 +1,5 @@
 (function() {
+  debugger;
   tinymce.create('tinymce.plugins.SnippetsPlugin', {
     init : function(ed, url) {
 

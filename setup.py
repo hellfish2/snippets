@@ -40,6 +40,7 @@ setup(name='uwosh.snippets',
       zip_safe=False,
       install_requires=[
           'setuptools',
+	  'plone.app.dexterity [grok]',
 	  'plone.directives.form',
           # -*- Extra requirements: -*-
       ],
