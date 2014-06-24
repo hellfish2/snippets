@@ -24,7 +24,7 @@
 			<input type="button" value="Insert" id="snippet-insert" />
 			<input type="button" value="Cancel" id="snippet-cancel" />
 			<input type="button" value="Preview" id="snippet-view" />
-			<a tal:attributes="href string:${view/siteUrl}/@@create-snippet" id="snippet-create">Create a new snippet</a>
+			<a tal:attributes="href string:${view/siteUrl}/.snippets/++add++uwosh.snippets.Snippet" id="snippet-create">Create a new snippet</a>
 		</div>
 		<div id="snippet-preview-buttons" style="display: none;" class="snippet-buttons">
 			<p>In the preview window, click/highlight where you want the snippet, then click "Insert"</p>

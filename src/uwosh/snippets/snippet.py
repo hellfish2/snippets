@@ -24,7 +24,7 @@ import re
 
 # Interface class; used to define content-type schema.
 
-class ISnippet(form.Schema, IImageScaleTraversable):
+class ISnippet(form.Schema):
     """
     A snippet definition
     """
@@ -44,6 +44,7 @@ class ISnippet(form.Schema, IImageScaleTraversable):
 
 class Snippet(dexterity.Item):
     grok.implements(ISnippet)
+    grok.name('snippet')
 
     # Add your class methods and properties here
     def getDescription(self):
@@ -85,8 +86,9 @@ class Snippet(dexterity.Item):
 # of this type by uncommenting the grok.name line below or by
 # changing the view class name and template filename to View / view.pt.
 
-class SampleView(grok.View):
+class Overlay(dexterity.EditForm):
     grok.context(ISnippet)
     grok.require('zope2.View')
+    grok.name('overlay')
 
-    # grok.name('view')
+    template = grok.PageTemplateFile('snippet_templates/overlay.pt')
