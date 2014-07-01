@@ -26,9 +26,10 @@ class SnippetParser():
 		matches = pattern.finditer(pageText)
 
 		snippets = self.sm.getSnippets(True)
+		import pdb; pdb.set_trace()
 		for match in matches:
 			try:
-				pageText = replace(pageText, match.group(0), snippets[match.group(1)].getText())
+				pageText = replace(pageText, match.group(0), snippets[match.group(1)].text)
 			except KeyError:
 				#The snippetID was invalid
 				pageText = replace(pageText, match.group(0), '')

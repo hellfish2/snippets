@@ -29,15 +29,15 @@ class TestSnippetManager(BaseTest):
 
     def test_delete_snippet(self):
     	sm = SnippetManager()
-    	sm.deleteSnippet('testDoc')
+    	sm.deleteSnippet('testdoc')
 
-    	self.assertFalse('testDoc' in self.folder)
+    	self.assertFalse('testdoc' in self.folder)
 
     def test_get_snippet(self):
     	sm = SnippetManager()
 
-    	snippet = sm.getSnippet('testDoc')
-    	self.assertTrue(snippet.getId() == 'testDoc')
+    	snippet = sm.getSnippet('testdoc')
+    	self.assertTrue(snippet.id == 'testdoc')
 
     def test_get_snippets(self):
     	sm = SnippetManager()

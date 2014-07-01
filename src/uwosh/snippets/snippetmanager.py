@@ -64,21 +64,8 @@ class SnippetManager():
 		self.indexSnippets()
 
 	def getSnippet(self, snippetId):
-
-		snippet = Snippet()
-		snippet.setId(snippetId)
 		doc = self.index[snippetId]
-
-		snippet.setText( doc.getRawText() )
-		snippet.setTitle(doc.Title())
-		snippet.setDescription(doc.Description())
-
-		portal = getSite()
-		wf = getToolByName(portal, 'portal_workflow')
-		wfs = wf.getInfoFor(doc, 'review_state')
-		snippet.setWorkflowState(wfs)
-
-		return snippet
+		return doc
 
 	def getSnippets(self, asDict=False):
 		
@@ -114,7 +101,7 @@ class SnippetManager():
 		items = folder.contentItems()
 
 		for item in items:
-			if( item[1].Type() == u'Page' ):
+			if( item[1].Type() == u'Snippet' ):
 
 				snippets[item[0]] = item[1]
 			elif( item[1].Type() == u'Folder' ):

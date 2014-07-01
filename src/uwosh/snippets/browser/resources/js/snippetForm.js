@@ -31,7 +31,7 @@ $(document).ready(function() {
 			return;
 		}
 
-		var id = $('#form-widgets-title').val();
+		var id = $('#form-widgets-IBasic-title').val();
 		//Sanitize the id. It will be done again once it reaches the 
 		//form class, in case this fails (or the JS is subverted).
 		id = id.replace(/\W/g, '');

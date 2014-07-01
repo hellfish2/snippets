@@ -19,17 +19,26 @@
       });
 
       ed.onClick.add(function(ed, e) {
-          if( $(e.target).attr('data-type') == 'snippet_tag' )
-          {
-            snippet_element = e.target;
+        var snippet_element = false;
+        if( $(e.target).attr('data-type') === 'snippet_tag')
+        {
+          snippet_element = e.target;
+        }
+        else if( $(e.target).parents().find('span[data-type="snippet_tag"]').length > 0 )
+        {
+          snippet_element = $(e.target).parents().find('span[data-type="snippet_tag"]');
+        }
+        else
+        {
+          return false;
+        }
+    
+        options = {
+          current_url: url,
+          editor_snippet: snippet_element,
+        };
 
-            options = {
-              current_url: url,
-              editor_snippet: snippet_element,
-            };
-
-            openSnippetWindow(options);
-          }
+        openSnippetWindow(options);
       });
 
       ed.onLoadContent.add(function(ed, e) {
@@ -94,7 +103,7 @@
       //Since these are meant to be used in-line, 
       //breaking to a new paragraph obviously isn't desired.
       var pageUrl = String(document.URL);
-      if( pageUrl.indexOf('@@edit-snippet') >= 0 || pageUrl.indexOf('@@create-snippet') >= 0)
+      if( pageUrl.indexOf('@@edit-snippet') >= 0 || pageUrl.indexOf('@@add-snippet') >= 0)
       {
         ed.settings.force_p_newlines = 0;
         ed.settings.forced_root_block = false;
@@ -106,6 +115,7 @@
           file: url + '/@@get-snippet-list',
           width: 800,
           height: 700,
+          title: 'test',
           inline: 1,
         }, options);
       }

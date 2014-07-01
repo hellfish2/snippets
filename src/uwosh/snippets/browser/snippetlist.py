@@ -19,15 +19,22 @@ class SnippetList(BrowserView):
 				sm = SnippetManager()
 				snippetId = self.request.get('snippet_id')
 				snippetId = urllib.unquote(snippetId)
-
 				try:
 					snippet = sm.getSnippet(snippetId)
+					
+					#Eventually I would prefer a more flexible option for this...
+					snippetProps = {
+						'id': snippet.id,
+						'title': snippet.title,
+						'description': snippet.description,
+						'text': snippet.text
+					}
 				except KeyError:
 					#Getting here means the request snippetID doesn't exist
 					#Returning False tells the AJAX handler to remove the snippet tag
 					return json.dumps(False)
 
-				return self.getSnippetAsJSON(snippet)
+				return json.dumps(snippetProps)
 		else:
 			return self.window_template()
 

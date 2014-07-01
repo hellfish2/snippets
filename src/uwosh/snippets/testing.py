@@ -10,6 +10,7 @@ from plone.app.testing import IntegrationTesting
 from plone.app.testing import FunctionalTesting
 
 from Products.CMFCore.utils import getToolByName
+from plone.dexterity.utils import createContentInContainer
 
 import unittest2 as unittest
 
@@ -67,18 +68,17 @@ class BaseTest(unittest.TestCase):
 
         folder = portal['.snippets']
         self.folder = folder
-        folder.invokeFactory('Document', 'testDoc')
-        self.doc = self.folder['testDoc']
+        self.doc = createContentInContainer(self.folder, 'uwosh.snippets.Snippet', title = 'testDoc')
 
         folder.invokeFactory('Folder', 'testFolder')
         folder2 = folder['testFolder']
-        folder2.invokeFactory('Document', 'testDoc2')
+        self.doc2 = createContentInContainer(folder2, 'uwosh.snippets.Snippet', title = 'testDoc2')
 
         #need to verify that the regex will catch more than 1
-        self.testString = 'This is a <span data-type="snippet_tag" data-snippet-id="testDoc"></span> test! Or is it <span data-type="snippet_tag" data-snippet-id="testDoc"></span>?'
+        self.testString = 'This is a <span data-type="snippet_tag" data-snippet-id="testdoc"></span> test! Or is it <span data-type="snippet_tag" data-snippet-id="testdoc"></span>?'
 
-        self.doc.setText("meaningless")
-        self.doc.setTitle("Meaningless")
+        self.doc.text = "meaningless"
+        self.doc.title = "Meaningless" 
 
         wft = getToolByName(portal, 'portal_workflow')
         wft.setDefaultChain('simple_publication_workflow')

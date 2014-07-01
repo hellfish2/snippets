@@ -1,13 +1,12 @@
 $(document).ready(function() {
 
-	document.title = 'Add a snippet';
+	//document.title = 'Add a snippet';
 	var t = $(this);
 
+	var editor_snippet = false;
 	catchNew();
 
-	var editor_snippet = tinyMCEPopup.getWindowArg('editor_snippet');
-
-	if( editor_snippet != false ) {
+	if( editor_snippet !== false && editor_snippet !== undefined ) {
 		$('#snippet-selection').val($(editor_snippet).attr('data-snippet-id'));
 		setSelectedSnippet();
 	}
@@ -169,8 +168,12 @@ $(document).ready(function() {
 		var newSnippet = str.match(/(\?|&)new_snippet=([a-zA-Z0-9_-]+)(&|$|)?/)
 		if( newSnippet != null )
 		{
-			var name = newSnippet[2];
+			var name = newSnippet[2].toLowerCase();
 			fetchSnippet(name);
+		}
+		else
+		{
+			editor_snippet = tinyMCEPopup.getWindowArg('editor_snippet');
 		}
 	}
 
@@ -204,18 +207,9 @@ $(document).ready(function() {
 
 	function fetchSnippet(snippetId)
 	{
-		var url = tinyMCEPopup.editor.documentBaseURI.source + '/@@get-snippet-list?json=true&snippet_id=';
-		url += snippetId
-
-		$.ajax({
-			url: url,
-			dataType: 'json',
-			success: function(responseText) {
-				var snippetId = '#snippet-' + responseText['id'];
-				var item = $(snippetId);
-				setSelectedSnippet(item);
-			},
-		})
+		var snippetId = '#snippet-' + snippetId;
+		var item = $(snippetId);
+		setSelectedSnippet(item);
 	}
 
 	function getSelectedSnippet() 
