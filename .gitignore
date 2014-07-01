@@ -3,4 +3,6 @@ dist/*
 dist/
 *.DS_Store
 *.egg-info
-src/uwosh/snippets/tests/*.html
+src/uwosh/snippets/tests/robot/*.html
+src/uwosh/snippets/tests/robot/*.png
+src/uwosh/snippets/tests/robot/*.xml
