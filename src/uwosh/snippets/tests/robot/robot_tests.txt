@@ -1,4 +1,5 @@
 *** Settings ***
+Resource	robot_variables.txt
 Resource	robot_keywords.txt
 
 *** Test Cases ***

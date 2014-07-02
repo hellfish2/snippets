@@ -11,6 +11,9 @@ from plone.app.testing import FunctionalTesting
 
 from Products.CMFCore.utils import getToolByName
 from plone.dexterity.utils import createContentInContainer
+from zope.publisher.browser import TestRequest
+
+from Products.Five.browser import BrowserView as View
 
 import unittest2 as unittest
 
@@ -20,6 +23,8 @@ from zope.configuration import xmlconfig
 
 from uwosh.snippets.parser import SnippetParser
 from uwosh.snippets.snippetmanager import SnippetManager
+from uwosh.snippets.snippet import ISnippet
+from uwosh.snippets.browser.snippetlist import SnippetList
 
 
 class UwoshsnippetsLayer(PloneSandboxLayer):
@@ -82,6 +87,14 @@ class BaseTest(unittest.TestCase):
 
         wft = getToolByName(portal, 'portal_workflow')
         wft.setDefaultChain('simple_publication_workflow')
+
+    def getRequest(self, form={}):
+        request = TestRequest(form=form, environ={
+            'SERVER_URL': 'http://nohost/plone/@@get-snippet-list',
+            'HTTP_HOST': 'nohost'
+            })
+
+        return request
 
     def tearDown(self):
         portal = self.layer['portal']

@@ -19,6 +19,7 @@ class DeleteSnippet(BrowserView):
 				try:
 					snippetId = re.sub(r'\W', '', self.request.get('snippet-id'))
 					sm.deleteSnippet(snippetId)
+					return True
 				except KeyError:
 					return False		
 
