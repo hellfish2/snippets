@@ -24,7 +24,7 @@
         {
           snippet_element = e.target;
         }
-        else if( $(e.target).parents().find('span[data-type="snippet_tag"]').length > 0 )
+        else if( $(e.target).parents('span[data-type="snippet_tag"]').length > 0 )
         {
           snippet_element = $(e.target).parents().find('span[data-type="snippet_tag"]');
         }
@@ -55,6 +55,7 @@
 
         $(snippet_ids).each(function(index, item) {
           var edit_url = document.baseURI + '/@@get-snippet-list?json=true&snippet_id=';
+          var self = this;
           $.ajax({
             url: edit_url + item,
             dataType: 'json',
@@ -64,12 +65,7 @@
               
               if( data == false )
               {
-                var text = '<span data-type="dead_snippet"></span>'
-                $(snippet).each(function()
-                {
-                  $(this).html(text);
-                  $(this).css('display', 'none');
-                });
+                $(ed.contentDocument).find('span[data-snippet-id="' + item + '"]').remove();
               }
               else
               {          
@@ -91,7 +87,6 @@
       });
       ed.onPostProcess.add(function(ed, o) {
         var body = o.node;
-        $(body).find('span[data-type="dead_snippet"]').parent().remove();
         var snippets = $(body).find('span[data-type="snippet_tag"]');
 
         $(snippets).html("").removeAttr('contenteditable');
@@ -103,7 +98,7 @@
       //Since these are meant to be used in-line, 
       //breaking to a new paragraph obviously isn't desired.
       var pageUrl = String(document.URL);
-      if( pageUrl.indexOf('@@edit-snippet') >= 0 || pageUrl.indexOf('@@add-snippet') >= 0)
+      if( pageUrl.indexOf('@@edit-snippet') >= 0 || pageUrl.indexOf('++add++uwosh.snippets.Snippet') >= 0)
       {
         ed.settings.force_p_newlines = 0;
         ed.settings.forced_root_block = false;
