@@ -78,6 +78,19 @@ Insert Snippet
 	New Frame
 	Check Preview Set 	${TEST_TITLE} 	${TEST_TEXT}
 
+Preview Snippet
+	Click Element		${PREVIEW_OPEN}
+	Click Element		${BROWSER_BROWSE}
+	New Frame
+	Click Element		${TEST_BROWSER_ITEM_2}
+	Click Element		${BROWSER_SELECT}
+	New Frame
+	Click Element		${PREVIEW_BOX}
+	Click Element		${PREVIEW_INSERT}
+	Current Frame Contains	${TEST_TEXT_2}
+	Click Element		${PREVIEW_SAVE}
+
+
 Open Snippet Browser
 	Wait Until Element Is Visible	${BROWSER_OPEN}
 	Click Element					${BROWSER_OPEN}
@@ -98,6 +111,7 @@ Check Delete
 
 Check Edit
 	Go To 		${HOME_PAGE}
+	Handle Prompts
 	Wait Until Element Is Visible	${CONTAINER}
 	Current Frame Contains			${TEST_TEXT_EDIT}
 	Go To 		${EDIT_PAGE}

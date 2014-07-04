@@ -42,4 +42,9 @@ ${INFO_TEXT}				snippet-preview
 ${EDIT_TEXT_FRAME}	text_ifr
 ${EDIT_SNIPPET}		css=span[data-snippet-id="robot"]
 ${EDIT_SAVE}		form.button.save
-${CONTAINER}		content		
+${CONTAINER}		content
+
+${PREVIEW_OPEN}		snippet-view
+${PREVIEW_BOX}		snippet-preview
+${PREVIEW_INSERT}	snippet-preview-insert
+${PREVIEW_SAVE}		snippet-preview-save
