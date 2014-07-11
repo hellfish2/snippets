@@ -27,4 +27,13 @@ class TestSnippetParser(BaseTest):
         self.assertTrue( text != '' )
         self.assertEqual(text, correct)
 
+    def test_ignore_bad_ids(self):
+        sp = SnippetParser()
+        text = sp.parsePage(self.badString)
+
+        correct = "This is a  test! Or is it ?"
+
+        self.assertTrue( text != '' )
+        self.assertEqual(text, correct)
+
 

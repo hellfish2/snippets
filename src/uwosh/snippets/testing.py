@@ -81,6 +81,7 @@ class BaseTest(unittest.TestCase):
 
         #need to verify that the regex will catch more than 1
         self.testString = 'This is a <span data-type="snippet_tag" data-snippet-id="testdoc"></span> test! Or is it <span data-type="snippet_tag" data-snippet-id="testdoc"></span>?'
+        self.badString = 'This is a <span data-type="snippet_tag" data-snippet-id="fake"></span> test! Or is it <span data-type="snippet_tag" data-snippet-id="TEstDOC"></span>?'
 
         self.doc.text = "meaningless"
         self.doc.title = "Meaningless" 
