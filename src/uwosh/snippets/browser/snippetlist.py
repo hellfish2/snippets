@@ -17,6 +17,10 @@ class SnippetList(BrowserView):
 			if self.request.get('snippet_id'):
 				self.request.response.setHeader('Content-Type', 'application/JSON;;charset="utf-8"') 
 				sm = SnippetManager()
+
+				if self.request.get('get-directory'):
+					return json.dumps(sm.getDirector())
+					
 				snippetId = self.request.get('snippet_id')
 				snippetId = urllib.unquote(snippetId)
 				try:
@@ -27,7 +31,8 @@ class SnippetList(BrowserView):
 						'id': snippet.id,
 						'title': snippet.title,
 						'description': snippet.description,
-						'text': snippet.text
+						'text': snippet.text,
+						'path': snippet.absolute_url(),
 					}
 				except KeyError:
 					#Getting here means the request snippetID doesn't exist
@@ -37,6 +42,10 @@ class SnippetList(BrowserView):
 				return json.dumps(snippetProps)
 		else:
 			return self.window_template()
+
+	def getMap(self):
+		sm = SnippetManager()
+		return json.dumps(sm.getDirectory())
 
 	def getSnippets(self):
 		sm = SnippetManager()

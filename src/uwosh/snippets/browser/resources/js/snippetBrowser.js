@@ -8,21 +8,16 @@ $(document).ready(function() {
 
 	catchEdit();
 
+	buildLayout();
+
+	fillEmptyFolders();
+
 	if( selectedSnippet.val() != "" )
 	{
 		var selected = $(':radio[value="' + selectedSnippet.val() + '"]');
 		$(selected).attr('checked', true);
 		$(selected).addClass('highlight');
 	}
-
-	var even = 1;
-	$('.snippet-box').each(function(even) {
-		if(even % 2 == 0)
-		{
-			$(this).addClass('even');
-		}
-		even += 1;
-	});
 
 	$('#snippet-browser-cancel').click(function() {
 		tinyMCEPopup.close();
@@ -91,6 +86,58 @@ $(document).ready(function() {
 		});
 	});
 
+	$('.snippet-folder').hide();
+
+	$('label').click(function() {
+		var name = $(this).attr('for');
+		var el = $('#' + name);
+
+		if( $(el).css('display') == 'none' )
+		{
+			$(el).slideDown();
+			$(this).find('span').removeClass('closed').addClass('open').text('-');
+		}
+		else
+		{
+			if( $(el).children().find(':checked').length > 0 )
+			{
+				return true;
+			}
+			$(this).find('span').removeClass('open').addClass('closed').text('+');
+			$(el).slideUp();
+		}
+	});
+
+	function buildLayout(layout, folder)
+	{
+		if( layout === undefined )
+		{
+			var layout = $('#snippet-directory').html();
+			layout = jQuery.parseJSON(layout);
+		}
+
+		if( folder === undefined )
+		{
+			folder = $('#snippet-browser');
+		}
+
+		for ( i in layout ) 
+		{
+			if( typeof( layout[i] ) == 'string' )
+			{
+				var el = $('#snippet-browser-' + i).detach();
+				folder.append( el );
+			}
+			else if( typeof( layout[i] ) == 'object' )
+			{
+				var el = makeFolder(folder, i);
+				$(folder).append(el);
+
+				buildLayout( layout[i], el );
+			}
+		}
+	}
+
 	function catchEdit()
 	{
 		var referrer = document.referrer;
@@ -101,6 +148,35 @@ $(document).ready(function() {
 		{
 			reload(match[2]);
 		}
+	}
+
+	function fillEmptyFolders()
+	{
+		var folders = $('#snippet-browser .snippet-folder');
+
+		$(folders).each(function() {
+			if( $(this).html() == '' )
+			{
+				$(this).html('<div class="empty">(empty)</div>')
+			}
+		});
+	}
+
+	function makeFolder(parent, folderName)
+	{
+		if( parent === undefined || folderName === undefined )
+		{
+			return false;
+		}
+
+		var folderId = 'snippet-folder-' + folderName;
+		var newFolder = '<div class="snippet-folder" id="' + folderId + '"></div>';
+		var label = '<label for="' + folderId + '"><span class="snippet-toggle closed">+</span>' + folderName + '</label>';
+
+		$(parent).append(label);
+		$(parent).append(newFolder);
+
+		return $('#' + folderId);
 	}
 
 	function sanitize(snippetId)

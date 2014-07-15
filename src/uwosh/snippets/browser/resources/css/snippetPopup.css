@@ -23,6 +23,16 @@
 #snippet-list .snippet-box {
 	width: auto;
 	padding: 5px;
+	border: 1px dotted #ddd;
+	border-bottom: none;
+}
+
+#snippet-list div.snippet-box:last-child {
+	border-bottom: 1px dotted #ddd;
+}
+
+#snippet-list .snippet-box + label {
+	border-top: 1px dotted #ddd;
 }
 
 #snippet-browser {
@@ -38,10 +48,6 @@
 #snippet-browser .snippet-box > a {
 	width: 5%;
 	margin-left: 5px;
-}
-
-#snippet-browser .snippet-box.even {
-	background-color: #ddd;
 }
 
 #snippet-browser .snippet-browser-radio {
@@ -73,6 +79,33 @@
 	border: 2px solid #ddd;
 	padding: 5px;
 	margin-top: 5px;
+}
+
+#snippet-browser .snippet-folder {
+	margin-left: 20px;
+	display: block;
+}
+
+#snippet-browser .snippet-folder .empty {
+	color: #ddd;
+}
+
+#snippet-browser label {
+	display: block;
+	font-size: 125%
+}
+
+#snippet-browser span {
+	font-size: 125%;
+	padding: 0 5px 0 5px;
+}
+
+#snippet-browser span.closed {
+	color: rgb(0,210,0);
+}
+
+#snippet-browser span.open {
+	color: red;
 }
 
 #snippet-info input {

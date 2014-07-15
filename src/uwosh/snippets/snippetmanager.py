@@ -90,6 +90,22 @@ class SnippetManager():
 
 		return snippets
 
+	def getDirectory(self, folder=''):
+		tree = {}
+
+		if folder == '':
+			folder = self.folder
+
+		objects = folder.contentItems()
+		for item in objects:
+			if item[1].Type() == u'Folder':
+				tree[item[1].Title()] =  self.getDirectory(item[1])
+			elif item[1].Type() == u'Snippet':
+				tree[item[0]] = item[0]
+
+		return tree
+
+
 	def indexSnippets(self, snippets=False, folder=False):
 		
 		if not snippets:
@@ -108,24 +124,6 @@ class SnippetManager():
 				snippets = self.indexSnippets(snippets, item[1])
 
 		return snippets
-
-
-	def updateDoc(self, snippetId, data):
-		
-		#This updates the underlying ATDocument after
-		#z3c.form.EditForm updates the Snippet object
-		#See uwosh.snippets.browser.addsnippet.SnippetEditForm
-
-		doc = self.index[snippetId]
-
-		if 'title' in data:
-			doc.setTitle(data['title'])
-
-		if 'description' in data:
-			doc.setDescription(data['description'])
-
-		if 'text' in data:
-			doc.setText(data['text'])
 
 
 
