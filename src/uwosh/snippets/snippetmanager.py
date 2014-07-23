@@ -99,9 +99,20 @@ class SnippetManager():
 		objects = folder.contentItems()
 		for item in objects:
 			if item[1].Type() == u'Folder':
-				tree[item[1].Title()] =  self.getDirectory(item[1])
+				info = {}
+
+				info['id'] = item[1].id
+				info['title'] = item[1].Title()
+				info['parent'] = folder.id
+				info['children'] = self.getDirectory(item[1])
+				tree[item[1].Title()] =  info
+
 			elif item[1].Type() == u'Snippet':
-				tree[item[0]] = item[0]
+				info = {}
+
+				info['title'] = item[0]
+				info['parent'] = self.folder.id
+				tree[item[0]] = info
 
 		return tree
 

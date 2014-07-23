@@ -41,14 +41,14 @@ $(document).ready(function() {
 		}
 	});
 
-	$('.snippet-box').click(function() {
+	$('#snippet-browser div.snippet-box').click(function() {
 
 		$('.snippet-box').removeClass('highlight');
 		$(this).find('input').attr('checked', true);
 		$(this).addClass('highlight');
 	});
 
-	$('.snippet-box').mouseenter(function() {
+	$('#snippet-browser div.snippet-box, #snippet-browser .snippet-folder-link').mouseenter(function() {
 		$(this).addClass('highlight');
 	}).mouseleave(function() {
 		if( $(this).find('input').attr('checked') )
@@ -88,25 +88,17 @@ $(document).ready(function() {
 
 	$('.snippet-folder').hide();
 
-	$('label').click(function() {
-		var name = $(this).attr('for');
-		var el = $('#' + name);
+	$('.snippet-folder-link').click(function() {
+		var val = $(this).text();
 
-		if( $(el).css('display') == 'none' )
-		{
-			$(el).slideDown();
-			$(this).find('span').removeClass('closed').addClass('open').text('-');
-		}
-		else
-		{
-			if( $(el).children().find(':checked').length > 0 )
-			{
-				return true;
-			}
-			$(this).find('span').removeClass('open').addClass('closed').text('+');
-			$(el).slideUp();
-		}
+		var el = $('#snippet-directory-leaves').find('div[data-folder-name="' + val + '"]');
+		setFolder(el);
 	});
+
+	$('div#snippet-folder-layout .folder').click(function() {
+		
+		setFolder(this);
+	})
 
 	function buildLayout(layout, folder)
 	{
@@ -118,22 +110,38 @@ $(document).ready(function() {
 
 		if( folder === undefined )
 		{
-			folder = $('#snippet-browser');
+			var start = $('#snippet-directory-leaves');
+			$(start).append('<div data-folder-depth="0" class="folder" data-folder-name=".snippets"><span class="marker">&#9707;</span><span class="folder-title" >Home</span></div>');
+
+			folder = $('#snippet-directory-leaves > div')
 		}
 
 		for ( i in layout ) 
 		{
-			if( typeof( layout[i] ) == 'string' )
-			{
-				var el = $('#snippet-browser-' + i).detach();
-				folder.append( el );
-			}
-			else if( typeof( layout[i] ) == 'object' )
-			{
-				var el = makeFolder(folder, i);
-				$(folder).append(el);
+			var self = layout[i];
 
-				buildLayout( layout[i], el );
+			if( self['id'] === undefined )
+			{
+				var el = $('#snippet-browser-' + self['title']).attr('data-folder', folder.attr('data-folder-name'));
+			}
+			else
+			{
+				var el = makeFolder(folder, self);
+				$(folder).after(el);
+
+				var link = '<div class="snippet-folder-link" style="display: none;" data-parent-id="' + 
+							folder.attr('data-folder-name') +
+							'" id="snippet-link-' +
+							self['id'] + 
+							'">' +
+							'<span>' +
+							self['title'] + 
+							'</span>' +
+							'</div>';
+
+				$('#snippet-browser').append( link )
+
+				buildLayout( self['children'], el );
 			}
 		}
 	}
@@ -150,6 +158,31 @@ $(document).ready(function() {
 		}
 	}
 
+	function setFolder(element)
+	{
+		if( $(element).find('span.marker').hasClass('opened') )
+		{
+			$(element).find('span.marker').removeClass('opened');
+			$('.snippet-box').show();
+			$('.snippet-folder-link').hide();
+			$('#folder-label').text('All Snippets');
+			return true;
+		}
+
+		$(element).parent().find('span.marker').removeClass('opened');
+		$(element).find('span.marker').addClass('opened');
+
+		$('.snippet-folder-link').hide();
+		$('#snippet-browser').find('div[data-parent-id="' + $(element).attr('data-folder-name') + '"]').show();
+
+		var name = $(element).attr('data-folder-name');
+		var title = $(element).find('span.folder-title').text();
+
+		$('.snippet-box').hide();
+		$('.snippet-box[data-folder="' + name + '"]').show();
+		$('#folder-label').text(title);
+	}
+
 	function fillEmptyFolders()
 	{
 		var folders = $('#snippet-browser .snippet-folder');
@@ -162,21 +195,32 @@ $(document).ready(function() {
 		});
 	}
 
-	function makeFolder(parent, folderName)
+	function makeFolder(parent, folder)
 	{
-		if( parent === undefined || folderName === undefined )
+		if( parent === undefined || folder === undefined )
 		{
 			return false;
 		}
 
-		var folderId = 'snippet-folder-' + folderName;
-		var newFolder = '<div class="snippet-folder" id="' + folderId + '"></div>';
-		var label = '<label for="' + folderId + '"><span class="snippet-toggle closed">+</span>' + folderName + '</label>';
+		var depth = parseInt($(parent).attr('data-folder-depth')) + 1;
+		var leader = '';
 
-		$(parent).append(label);
-		$(parent).append(newFolder);
+		for( var i = 0; i < depth; i++ )
+		{
+			leader = leader + '&nbsp;&nbsp;&nbsp;&nbsp;';
+		}
 
-		return $('#' + folderId);
+		leader += '<span class="marker">&#9707;</span>';
+
+		var newFolder = '<div class="folder" data-folder-depth="' + 
+						depth + '" data-folder-name="' + 
+						folder['id'] + '">' + 
+						leader + 
+						'<span class="folder-title">' +
+						folder['title'] + 
+						'</span></div>';
+
+		return $(newFolder);
 	}
 
 	function sanitize(snippetId)

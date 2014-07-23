@@ -85,7 +85,7 @@ $(document).ready(function() {
 		var ed = tinyMCE.activeEditor;
 		ed.windowManager.open({
 			file: url + '/@@get-snippet-list?list-view=true',
-			width : 800,
+			width : 900,
           	height : 600,
           	inline : 1
 

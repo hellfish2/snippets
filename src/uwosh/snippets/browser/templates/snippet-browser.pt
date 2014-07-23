@@ -5,6 +5,11 @@
 	<link rel="stylesheet" type="text/css" href="++resource++uwosh.snippets/css/snippetPopup.css" />
 
 	<label for="snippet-browser">Select a snippet</label>
+	<div id="snippet-folder-layout">
+		<div id="snippet-directory-leaves">
+		</div>
+	</div>
+	<label id="folder-label" for="snippet-browser">All Snippets</label>
 	<div id="snippet-browser">
 		<div id="snippet-directory" tal:content="view/getMap" style="display: none;"></div>
 		<div class="snippet-box" tal:repeat="snippet snippets" tal:attributes="id string:snippet-browser-${snippet/getId}">

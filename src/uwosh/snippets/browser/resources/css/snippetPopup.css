@@ -15,6 +15,10 @@
 	padding-top: 5px;
 }
 
+#snippet-list > label {
+	display: block;
+}
+
 #snippet-list .snippet-buttons input {
 	margin-top: 5px;
 	margin-right: 5px;
@@ -23,22 +27,36 @@
 #snippet-list .snippet-box {
 	width: auto;
 	padding: 5px;
-	border: 1px dotted #ddd;
-	border-bottom: none;
 }
 
-#snippet-list div.snippet-box:last-child {
-	border-bottom: 1px dotted #ddd;
+#snippet-folder-layout {
+	width: 15%;
+	height: 85%;
+	display: inline-block;
+	float:	left;
+	overflow-x: auto;
+	white-space: nowrap;
+	font-size: 75%;
 }
 
-#snippet-list .snippet-box + label {
-	border-top: 1px dotted #ddd;
+#snippet-folder-layout .folder:hover {
+	background-color: SkyBlue;
+}
+
+#snippet-folder-layout span.marker {
+	color: gold;
+}
+
+#snippet-folder-layout span.marker.opened {
+	color: red;
 }
 
 #snippet-browser {
 	height: 85%;
+	width: 80%;
 	overflow: auto;
 	border: 2px solid #ddd;
+	display: inline-block;
 }
 
 #snippet-browser .snippet-box > div {
@@ -69,8 +87,24 @@
 	height: auto;
 }
 
-#snippet-browser .snippet-box.highlight {
+#snippet-browser div.highlight {
 	background-color: SkyBlue;
+}
+
+#snippet-browser .snippet-folder-link.highlight {
+	background-color: #ddd;
+}
+
+#snippet-browser div.snippet-folder-link {
+	padding: 5px;
+	cursor: pointer;
+}
+
+#snippet-browser div.snippet-folder-link > span{
+	background: no-repeat transparent 0px -644px url(../../contenttypes-sprite.png);
+	padding-left: 35px;
+	margin-left: 2px;
+	padding-top: 4px;
 }
 
 #snippet-info {
@@ -92,20 +126,6 @@
 
 #snippet-browser label {
 	display: block;
-	font-size: 125%
-}
-
-#snippet-browser span {
-	font-size: 125%;
-	padding: 0 5px 0 5px;
-}
-
-#snippet-browser span.closed {
-	color: rgb(0,210,0);
-}
-
-#snippet-browser span.open {
-	color: red;
 }
 
 #snippet-info input {
