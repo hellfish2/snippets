@@ -40,8 +40,8 @@ Delete Snippet
 	Click Element		${DELETE_OK}
 	Click Element		${DELETE_OK}
 	Get Newest TinyMCE Window
-	Current Frame Should Not Contain		${TEST_TITLE}
-	Current Frame Should Not Contain 		${TEST_TITLE_2}
+	Page Should Not Contain Element			${TEST_BROWSER_ITEM}
+	Page Should Not Contain Element			${TEST_BROWSER_ITEM_2}
 	Click Element		${BROWSER_CANCEL}
 	Check Delete
 

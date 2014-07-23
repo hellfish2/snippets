@@ -89,7 +89,7 @@ $(document).ready(function() {
 	$('.snippet-folder').hide();
 
 	$('.snippet-folder-link').click(function() {
-		var val = $(this).text();
+		var val = $(this).attr('data-id');
 
 		var el = $('#snippet-directory-leaves').find('div[data-folder-name="' + val + '"]');
 		setFolder(el);
@@ -131,7 +131,7 @@ $(document).ready(function() {
 
 				var link = '<div class="snippet-folder-link" style="display: none;" data-parent-id="' + 
 							folder.attr('data-folder-name') +
-							'" id="snippet-link-' +
+							'"data-id="' +
 							self['id'] + 
 							'">' +
 							'<span>' +
